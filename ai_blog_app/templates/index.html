@@ -182,18 +182,19 @@
 
     <script>
         document.getElementById('generateBlogButton').addEventListener('click', async () => {
-            const youtubeLink = document.getElementById('youtubeLink').value;
-            const loadingIndicator = document.getElementById('loading-circle').value;
-            const blogContent = document.getElementById('blogContent').value;
+            
 
+            const youtubeLink = document.getElementById('youtubeLink').value;
+            const blogContent = document.getElementById('blogContent');
+            
             if(youtubeLink) {
                 document.getElementById('loading-circle').style.display = 'block';
-                loadingIndicator.classList.remove('hidden');
-                blogContent.innerHTML = ''; //Clear previous content
+                
+                blogContent.innerHTML = ''; // Clear previous content
 
                 const endpointUrl = '/generate-blog';
-
-                try{
+                
+                try {
                     const response = await fetch(endpointUrl, {
                         method: 'POST',
                         headers: {
@@ -204,20 +205,16 @@
 
                     const data = await response.json();
 
-                    // blogContent.innerHTML = data.content;
-                    blogContent.textContent = data.content; //to avoid HTML injection
-                    loadingIndicator.classList.add('hidden');
+                    blogContent.innerHTML = data.content;
 
-                }
-                catch(error){
+                } catch (error) {
                     console.error("Error occurred:", error);
                     alert("Something went wrong. Please try again later.");
-                    loadingIndicator.classList.add('hidden');
+                    
                 }
                 document.getElementById('loading-circle').style.display = 'none';
-            }
-            else{
-                alert("Please enter a valid Youtube link!");
+            } else {
+                alert("Please enter a YouTube link.");
             }
         });
     </script>
